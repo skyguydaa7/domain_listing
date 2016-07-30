@@ -48,4 +48,6 @@ dependencies {
     //Reactive Programming
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+    //Image
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

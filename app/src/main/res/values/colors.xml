@@ -7,9 +7,14 @@
     
     
     <!-- Search Colors -->
-    <color name="search_price_active">#3F51B5</color>
-    <color name="search_features_active">@android:color/primary_text_light</color>
-    <color name="search_location_active">@android:color/darker_gray</color>
+    <color name="search_recyclerview_background">#E6E6E6</color>
+
+
+    <!-- Card Listing Colors -->
+    <color name="listing_background">@android:color/white</color>
+    <color name="listing_price_active">#3F51B5</color>
+    <color name="listing_features_active">@android:color/primary_text_light</color>
+    <color name="listing_location_active">@android:color/darker_gray</color>
 
 
 </resources>

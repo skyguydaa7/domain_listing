@@ -12,7 +12,7 @@ import com.lbbento.domain.domainlisting.search.SearchListFragment;
 public class MainActivity extends BaseActivity {
 
 
-    //Components
+    //DI Components
     SearchComponent mSearchComponent;
 
     @Override
@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity {
         //Injectors to be used by Fragments
         initializeInjectors();
 
-        //Initialize with home fragment
+        //Initialize fragment
         addFragment(R.id.main_content_frame, SearchListFragment.newInstance());
 
     }

@@ -28,6 +28,15 @@ public class ListingItem {
     @SerializedName(value="DisplayableAddress")
     private String displayableAddress;
 
+    @SerializedName(value="IsElite")
+    private Integer isElite;
+
+    @SerializedName(value="RetinaDisplayThumbUrl")
+    private String thumbUrl;
+
+    @SerializedName(value="SecondRetinaDisplayThumbUrl")
+    private String secondThumbUrl;
+
 
 
 
@@ -70,5 +79,29 @@ public class ListingItem {
 
     public void setDisplayableAddress(String displayableAddress) {
         this.displayableAddress = displayableAddress;
+    }
+
+    public boolean isElite() {
+        return isElite == 1 ? true : false;
+    }
+
+    public void setIsElite(boolean elite) {
+        isElite = elite ? 1 : 0;
+    }
+
+    public String getThumbUrl() {
+        return thumbUrl;
+    }
+
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
+    }
+
+    public String getSecondThumbUrl() {
+        return secondThumbUrl;
+    }
+
+    public void setSecondThumbUrl(String secondThumbUrl) {
+        this.secondThumbUrl = secondThumbUrl;
     }
 }

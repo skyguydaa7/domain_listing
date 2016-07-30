@@ -134,6 +134,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     public void showLoadingError() {
         //TODO Show error when rying to retrieve data
         setLoadingIndicator(false);
+        setRetryIndicator(true);
     }
 
 

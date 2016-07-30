@@ -1,4 +1,5 @@
-<resources>
+<resources
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -28,19 +29,39 @@
     <style name="AppTheme.SearchTextViewPrice">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/search_price_active</item>
+        <item name="android:textColor">@color/listing_price_active</item>
     </style>
 
     <style name="AppTheme.SearchTextViewFeatures">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/search_features_active</item>
+        <item name="android:textColor">@color/listing_features_active</item>
     </style>
 
     <style name="AppTheme.SearchTextViewLocation">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/search_location_active</item>
+        <item name="android:textColor">@color/listing_location_active</item>
     </style>
+
+
+    <!-- Listing card Styles -->
+    <style name="AppTheme.ListingCard" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_margin">@dimen/cardview_listing_margin</item>
+        <item name="android:padding">@dimen/cardview_listing_padding</item>
+    </style>
+
+    <style name="AppTheme.ListingCardNormal" parent="AppTheme.ListingCard">
+        <item name="cardBackgroundColor">@color/listing_background</item>
+    </style>
+
+    <style name="AppTheme.ListingCardElite" parent="AppTheme.ListingCard">
+        <item name="cardBackgroundColor">@color/listing_background</item>
+    </style>
+
+
 
 </resources>

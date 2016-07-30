@@ -1,15 +1,22 @@
 package com.lbbento.domain.domainlisting.search;
 
 import android.content.Context;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.domainlisting.R;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,9 +52,28 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
         return (this.listingItemCollection != null) ? this.listingItemCollection.size() : 0;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position >= 0) {
+            ListingItem item = listingItemCollection.get(position);
+            return (item.isElite() ? 1 : 0);
+        }
+        return super.getItemViewType(position);
+    }
+
     @Override public ListingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = this.layoutInflater.inflate(R.layout.row_listing, parent, false);
-        return new ListingItemViewHolder(view);
+
+        int resource;
+
+        switch (viewType) {
+            case 1:
+                resource = R.layout.row_listing_elite;
+                break;
+            default:
+                resource = R.layout.row_listing;
+        }
+
+        return new ListingItemViewHolder(this.layoutInflater.inflate(resource, parent, false));
     }
 
     @Override public void onBindViewHolder(ListingItemViewHolder holder, final int position) {
@@ -64,19 +90,20 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
         ));
         holder.textViewLocation.setText(mListingItem.getDisplayableAddress());
 
+        //if Elite
+        if (mListingItem.isElite()) {
+            ArrayList<String> urls = new ArrayList<>();
+            urls.add(mListingItem.getThumbUrl());
+            urls.add(mListingItem.getSecondThumbUrl());
+            holder.imageSlidePager.setAdapter(new ImagePagerAdapter(ctx, urls));
+        }else {
+            Picasso.with(ctx).load(mListingItem.getThumbUrl()).placeholder(R.drawable.placeholder).into(holder.imageThumb1);
 
-//        txtTimezone.setText(forecast.getTimezone());
-//        viewWidgets.txtMore.setText(String.format("%s:%s\n%s:%s\n%s:%s", getResources().getString(R.string.format_dew_point),
-//                forecast.getCurrently().getDewPoint().toString(),
-//                getResources().getString(R.string.format_pressure),
-//                forecast.getCurrently().getPressure().toString(),
-//                getResources().getString(R.string.format_cloud_cover),
-//                forecast.getCurrently().getCloudCover().toString()));
-//        String icon = Forecast.icons.get(forecast.getCurrently().getIcon()).toString();
-//        Picasso.with(getContext()).load(icon).placeholder(R.drawable.placeholder).into(viewWidgets.icon);
+        }
 
 
 
+        //Click Listener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (SearchListAdapter.this.onItemClickListener != null) {
@@ -110,6 +137,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
         @BindView(R.id.price) TextView textViewPrice;
         @BindView(R.id.features) TextView textViewFeatures;
         @BindView(R.id.location) TextView textViewLocation;
+        @Nullable @BindView(R.id.thumbImage1) ImageView imageThumb1;
+        @Nullable @BindView(R.id.imageSlidePager) ViewPager imageSlidePager;
 
         public ListingItemViewHolder(View itemView) {
             super(itemView);
@@ -117,4 +146,64 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
             ButterKnife.bind(this, itemView);
         }
     }
+
+
+
+    public class ImagePagerAdapter extends PagerAdapter {
+
+
+        private ArrayList<String> imageLinks;
+        private LayoutInflater inflater;
+        private Context context;
+
+
+        public ImagePagerAdapter(Context context,ArrayList<String> imageLinks) {
+            this.context = context;
+            this.imageLinks = imageLinks;
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getCount() {
+            return imageLinks.size();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup view, int position) {
+            View imageLayout = inflater.inflate(R.layout.page_image, view, false);
+
+            assert imageLayout != null;
+
+            final ImageView imageView = (ImageView) imageLayout
+                    .findViewById(R.id.thumbImage2);
+
+            Picasso.with(ctx).load(imageLinks.get(position)).placeholder(R.drawable.placeholder).into(imageView);
+            view.addView(imageLayout, 0);
+
+            return imageLayout;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view.equals(object);
+        }
+
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+        }
+
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
+
+
+    }
 }
+
+
