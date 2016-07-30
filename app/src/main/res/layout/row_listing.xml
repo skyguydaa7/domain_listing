@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/cardview_listing_margin"
+    android:padding="@dimen/cardview_listing_padding"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/price"
+        style="@style/AppTheme.SearchTextViewPrice" />
+
+    <TextView
+        android:id="@+id/features"
+        style="@style/AppTheme.SearchTextViewFeatures" />
+
+    <TextView
+        android:id="@+id/location"
+        style="@style/AppTheme.SearchTextViewLocation" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

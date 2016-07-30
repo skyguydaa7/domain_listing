@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_ENDPOINT", "\"https://rest.domain.com.au/\""
+        }
+        debug {
+            buildConfigField "String", "API_ENDPOINT", "\"https://rest.domain.com.au/\""
+        }
+
+    }
+
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'  // Some libraries have issues with this
+        disable 'OldTargetApi'    // Due to Robolectric that modifies the manifest when running tests
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Testing dependencies
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+    //DI
+    compile 'com.google.dagger:dagger:2.5'
+    apt 'com.google.dagger:dagger-compiler:2.5'
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    //Restful
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
+    //Reactive
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.android.support:support-annotations:24.1.1'
+}
