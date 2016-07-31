@@ -21,6 +21,14 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true" />
 
+            <ImageView
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_fav"/>
+
             <TextView
                 android:id="@+id/price"
                 style="@style/AppTheme.SearchTextViewPrice" />

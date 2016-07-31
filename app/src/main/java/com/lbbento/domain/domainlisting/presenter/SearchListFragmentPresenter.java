@@ -49,6 +49,8 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
     @Override
     public void loadSearch() {
 
+        view.setRetryIndicator(false);
+
         view.setLoadingIndicator(true);
 
 

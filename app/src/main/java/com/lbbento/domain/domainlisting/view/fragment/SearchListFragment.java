@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lbbento on 25/07/2016.
@@ -173,6 +174,9 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
 
     }
 
+    @OnClick(R.id.bt_retry) void onButtonRetryClick() {
+        mPresenter.loadSearch(); //Exercise - no parameters
+    }
 
     private void setupRecyclerView() {
         this.searchListAdapter.setOnItemClickListener(onItemClickListener);
