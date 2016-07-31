@@ -18,7 +18,7 @@ import rx.subscriptions.Subscriptions;
  * Created by lbbento on 30/07/2016.
  */
 
-public class SearchListFragmentPresenter implements SearchListFragmentContract.Presenter<SearchListFragment> {
+public class SearchListFragmentPresenter implements SearchListFragmentContract.Presenter<SearchListFragmentContract.View> {
 
     private final SearchRepository mSearchRepository;
     private SearchListFragmentContract.View view;
@@ -32,7 +32,7 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
 
 
     @Override
-    public void setView(SearchListFragment view) {
+    public void setView(SearchListFragmentContract.View view) {
         this.view = view;
         if (view == null) {
             mSubscription.unsubscribe();
@@ -60,8 +60,6 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
         String suburb = "Bondi";
         String pcodes = "2026";
         String state = "NSW";
-
-
 
         mSubscription = mSearchRepository
                 .getMapSearch(mode, suburb, pcodes, state)
