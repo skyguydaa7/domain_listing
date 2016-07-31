@@ -4,6 +4,7 @@ package com.lbbento.domain.domainlisting.search;
  * Created by lbbento on 30/06/2016.
  */
 
+import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.data.model.SearchModel;
 import com.lbbento.domain.domainlisting.base.BaseFragmentContract;
 import com.lbbento.domain.domainlisting.base.BasePresenterContract;
@@ -16,6 +17,8 @@ public interface SearchListFragmentContract {
     interface View extends BaseFragmentContract<Presenter> {
 
         void showSearch(SearchModel search);
+
+        void showListingItemDetails(ListingItem listingItem);
 
         void showNotFound();
     }

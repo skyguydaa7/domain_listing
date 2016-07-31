@@ -10,8 +10,8 @@ import com.google.gson.annotations.SerializedName;
 public class ListingItem {
 
 
-  //TODO - What else do I need from here?
-
+    @SerializedName(value="AdId")
+    private Long adId;
 
     @SerializedName(value="DisplayPrice")
     private String displayPrice;
@@ -38,7 +38,13 @@ public class ListingItem {
     private String secondThumbUrl;
 
 
+    public Long getAdId() {
+        return adId;
+    }
 
+    public void setAdId(Long adId) {
+        this.adId = adId;
+    }
 
     public String getDisplayPrice() {
         return displayPrice;

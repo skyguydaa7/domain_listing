@@ -1,6 +1,7 @@
 package com.lbbento.domain.domainlisting.search;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,14 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.data.model.SearchModel;
 import com.lbbento.domain.domainlisting.R;
 import com.lbbento.domain.domainlisting.base.BaseFragment;
 import com.lbbento.domain.domainlisting.di.component.SearchComponent;
+import com.lbbento.domain.domainlisting.listing.ListingItemDetailFragment;
 import com.lbbento.domain.domainlisting.main.MainActivity;
 
 import javax.inject.Inject;
@@ -32,6 +36,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     @BindView(R.id.recycler_listing) RecyclerView recyclerViewListing;
     @BindView(R.id.commom_progress) RelativeLayout progress;
     @BindView(R.id.commom_retry) RelativeLayout retry;
+    @Nullable @BindView(R.id.detail_content_frame) FrameLayout detailContent;
 
     @Inject protected SearchListFragmentPresenter mPresenter;
     @Inject protected SearchListAdapter searchListAdapter;
@@ -58,8 +63,13 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
         //RecyclerView
         setupRecyclerView();
 
+        if (savedInstanceState == null) {
+            showListingItemDetails(null); //Initialize empty
+        }
+
         return root;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +129,23 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
         }
 
         setLoadingIndicator(false);
+    }
+
+    /**
+     * Show Listingitem Details when possible.
+     * In this example it just show the details if it's a  7" tablet or bigger, in landscape mode.(Could've defined another rules, however, there was no strict rules so I just defined this usecase). Lucas Bento
+     * @param listingItem
+     */
+    @Override
+    public void showListingItemDetails(ListingItem listingItem) {
+        if (detailContent != null) {
+            String id = (listingItem != null ? listingItem.getAdId().toString() : null);
+            //Initialize Detail Screen
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_content_frame, ListingItemDetailFragment.newInstance(id))
+                    .commitAllowingStateLoss();
+        }
     }
 
     @Override

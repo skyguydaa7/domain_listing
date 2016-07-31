@@ -10,5 +10,7 @@
     <string name="card_description_bathrooms">bath</string>
     <string name="card_description_carspaces">car</string>
 
+    <!-- ListingItemDetail -->
+    <string name="listing_item_default_text">Choose one item to see the details.</string>
 
 </resources>

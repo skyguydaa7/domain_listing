@@ -83,7 +83,7 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
     }
 
     public void onListingItemClicked(ListingItem mListingItem) {
-        //TODO - What do to when clicked?
+        view.showListingItemDetails(mListingItem);
     }
 
 }

@@ -28,7 +28,10 @@ import butterknife.ButterKnife;
  * Adapter that manages a collection of {@link com.lbbento.domain.data.model.ListingItem}.
  */
 
-public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ListingItemViewHolder> {
+public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int VIEW_TYPE_NORMAL = 0;
+    private static final int VIEW_TYPE_ELITE = 1;
+
     Context ctx;
 
 
@@ -56,52 +59,64 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
     public int getItemViewType(int position) {
         if (position >= 0) {
             ListingItem item = listingItemCollection.get(position);
-            return (item.isElite() ? 1 : 0);
+            return (item.isElite() ? VIEW_TYPE_ELITE : VIEW_TYPE_NORMAL);
         }
         return super.getItemViewType(position);
     }
 
-    @Override public ListingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        int resource;
+    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         switch (viewType) {
-            case 1:
-                resource = R.layout.row_listing_elite;
-                break;
+            case VIEW_TYPE_ELITE:
+                return new ListingItemEliteViewHolder(this.layoutInflater.inflate(R.layout.row_listing_elite, parent, false));
             default:
-                resource = R.layout.row_listing;
+                return new ListingItemNormalViewHolder(this.layoutInflater.inflate(R.layout.row_listing, parent, false));
         }
 
-        return new ListingItemViewHolder(this.layoutInflater.inflate(resource, parent, false));
     }
 
-    @Override public void onBindViewHolder(ListingItemViewHolder holder, final int position) {
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ListingItem mListingItem = this.listingItemCollection.get(position);
 
-        holder.textViewPrice.setText(mListingItem.getDisplayPrice());
-        holder.textViewFeatures.setText(String.format("%s %s, %s %s, %s %s" ,
-                                        mListingItem.getBedrooms().toString(),
-                                        ctx.getResources().getString(R.string.card_description_bedrooms),
-                                        mListingItem.getBathrooms().toString(),
-                                        ctx.getResources().getString(R.string.card_description_bathrooms),
-                                        mListingItem.getCarspaces().toString(),
-                                        ctx.getResources().getString(R.string.card_description_carspaces)
-        ));
-        holder.textViewLocation.setText(mListingItem.getDisplayableAddress());
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_NORMAL:
+                ListingItemNormalViewHolder viewholder = (ListingItemNormalViewHolder) holder;
+                viewholder.textViewPrice.setText(mListingItem.getDisplayPrice());
+                viewholder.textViewFeatures.setText(String.format("%s %s, %s %s, %s %s" ,
+                        mListingItem.getBedrooms().toString(),
+                        ctx.getResources().getString(R.string.card_description_bedrooms),
+                        mListingItem.getBathrooms().toString(),
+                        ctx.getResources().getString(R.string.card_description_bathrooms),
+                        mListingItem.getCarspaces().toString(),
+                        ctx.getResources().getString(R.string.card_description_carspaces)
+                ));
+                viewholder.textViewLocation.setText(mListingItem.getDisplayableAddress());
+                Picasso.with(ctx).load(mListingItem.getThumbUrl()).placeholder(R.drawable.placeholder).into(viewholder.imageThumb);
+                break;
 
-        //if Elite
-        if (mListingItem.isElite()) {
-            ArrayList<String> urls = new ArrayList<>();
-            urls.add(mListingItem.getThumbUrl());
-            urls.add(mListingItem.getSecondThumbUrl());
-            holder.imageSlidePager.setAdapter(new ImagePagerAdapter(ctx, urls));
-        }else {
-            Picasso.with(ctx).load(mListingItem.getThumbUrl()).placeholder(R.drawable.placeholder).into(holder.imageThumb1);
+            case VIEW_TYPE_ELITE:
+                ListingItemEliteViewHolder viewholderElite = (ListingItemEliteViewHolder) holder;
+
+                viewholderElite.textViewPrice.setText(mListingItem.getDisplayPrice());
+                viewholderElite.textViewFeatures.setText(String.format("%s %s, %s %s, %s %s" ,
+                        mListingItem.getBedrooms().toString(),
+                        ctx.getResources().getString(R.string.card_description_bedrooms),
+                        mListingItem.getBathrooms().toString(),
+                        ctx.getResources().getString(R.string.card_description_bathrooms),
+                        mListingItem.getCarspaces().toString(),
+                        ctx.getResources().getString(R.string.card_description_carspaces)
+                ));
+                viewholderElite.textViewLocation.setText(mListingItem.getDisplayableAddress());
+                ArrayList<String> urls = new ArrayList<>();
+                urls.add(mListingItem.getThumbUrl());
+                urls.add(mListingItem.getSecondThumbUrl());
+                viewholderElite.imageSlidePager.setAdapter(new ImagePagerAdapter(ctx, urls));
+                break;
 
         }
-
-
 
         //Click Listener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -133,20 +148,33 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
         }
     }
 
-    static class ListingItemViewHolder extends RecyclerView.ViewHolder {
+    interface ListingItemViewHolder {};
+
+    static class ListingItemNormalViewHolder extends RecyclerView.ViewHolder implements ListingItemViewHolder {
         @BindView(R.id.price) TextView textViewPrice;
         @BindView(R.id.features) TextView textViewFeatures;
         @BindView(R.id.location) TextView textViewLocation;
-        @Nullable @BindView(R.id.thumbImage1) ImageView imageThumb1;
-        @Nullable @BindView(R.id.imageSlidePager) ViewPager imageSlidePager;
+        @BindView(R.id.thumbImage) ImageView imageThumb;
 
-        public ListingItemViewHolder(View itemView) {
+        public ListingItemNormalViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
         }
     }
 
+    static class ListingItemEliteViewHolder extends RecyclerView.ViewHolder implements ListingItemViewHolder {
+        @BindView(R.id.price) TextView textViewPrice;
+        @BindView(R.id.features) TextView textViewFeatures;
+        @BindView(R.id.location) TextView textViewLocation;
+        @Nullable @BindView(R.id.imageSlidePager) ViewPager imageSlidePager;
+
+        public ListingItemEliteViewHolder(View itemView) {
+            super(itemView);
+
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
 
     public class ImagePagerAdapter extends PagerAdapter {
@@ -180,7 +208,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Li
             assert imageLayout != null;
 
             final ImageView imageView = (ImageView) imageLayout
-                    .findViewById(R.id.thumbImage2);
+                    .findViewById(R.id.thumbImage);
 
             Picasso.with(ctx).load(imageLinks.get(position)).placeholder(R.drawable.placeholder).into(imageView);
             view.addView(imageLayout, 0);

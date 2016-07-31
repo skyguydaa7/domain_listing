@@ -23,8 +23,10 @@ public class MainActivity extends BaseActivity {
         //Injectors to be used by Fragments
         initializeInjectors();
 
-        //Initialize fragment
-        addFragment(R.id.main_content_frame, SearchListFragment.newInstance());
+        if (savedInstanceState == null) {
+            //Initialize fragment
+            addFragment(R.id.main_content_frame, SearchListFragment.newInstance());
+        }
 
     }
 

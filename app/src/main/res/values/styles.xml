@@ -26,19 +26,19 @@
 
 
     <!-- Search Styles -->
-    <style name="AppTheme.SearchTextViewPrice">
+    <style name="AppTheme.SearchTextViewPrice" parent="TextAppearance.AppCompat">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/listing_price_active</item>
     </style>
 
-    <style name="AppTheme.SearchTextViewFeatures">
+    <style name="AppTheme.SearchTextViewFeatures" parent="TextAppearance.AppCompat">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/listing_features_active</item>
     </style>
 
-    <style name="AppTheme.SearchTextViewLocation">
+    <style name="AppTheme.SearchTextViewLocation" parent="TextAppearance.AppCompat">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/listing_location_active</item>
