@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.search;
+package com.lbbento.domain.domainlisting.presenter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.data.model.SearchModel;
 import com.lbbento.domain.data.repository.SearchRepository;
+import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
 
 import rx.Observer;
 import rx.Subscription;

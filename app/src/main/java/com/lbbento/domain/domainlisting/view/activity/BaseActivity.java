@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.base;
+package com.lbbento.domain.domainlisting.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

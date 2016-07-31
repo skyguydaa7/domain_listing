@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.listing;
+package com.lbbento.domain.domainlisting.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lbbento.domain.domainlisting.R;
-import com.lbbento.domain.domainlisting.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

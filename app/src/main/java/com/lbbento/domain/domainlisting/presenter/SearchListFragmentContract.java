@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.search;
+package com.lbbento.domain.domainlisting.presenter;
 
 /**
  * Created by lbbento on 30/06/2016.
@@ -6,15 +6,13 @@ package com.lbbento.domain.domainlisting.search;
 
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.data.model.SearchModel;
-import com.lbbento.domain.domainlisting.base.BaseFragmentContract;
-import com.lbbento.domain.domainlisting.base.BasePresenterContract;
 
 /**
  * This specifies the methods that have to be implemented between view and presenter
  */
 public interface SearchListFragmentContract {
 
-    interface View extends BaseFragmentContract<Presenter> {
+    interface View extends BaseViewContract<Presenter> {
 
         void showSearch(SearchModel search);
 

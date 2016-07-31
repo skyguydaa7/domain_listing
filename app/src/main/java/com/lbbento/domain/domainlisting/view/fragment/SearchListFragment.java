@@ -1,26 +1,25 @@
-package com.lbbento.domain.domainlisting.search;
+package com.lbbento.domain.domainlisting.view.fragment;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.data.model.SearchModel;
 import com.lbbento.domain.domainlisting.R;
-import com.lbbento.domain.domainlisting.base.BaseFragment;
 import com.lbbento.domain.domainlisting.di.component.SearchComponent;
-import com.lbbento.domain.domainlisting.listing.ListingItemDetailFragment;
-import com.lbbento.domain.domainlisting.main.MainActivity;
+import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
+import com.lbbento.domain.domainlisting.presenter.SearchListFragmentContract;
+import com.lbbento.domain.domainlisting.presenter.SearchListFragmentPresenter;
+import com.lbbento.domain.domainlisting.view.adapter.SearchListLayoutManager;
+import com.lbbento.domain.domainlisting.view.activity.MainActivity;
 
 import javax.inject.Inject;
 
@@ -36,6 +35,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     @BindView(R.id.recycler_listing) RecyclerView recyclerViewListing;
     @BindView(R.id.commom_progress) RelativeLayout progress;
     @BindView(R.id.commom_retry) RelativeLayout retry;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @Nullable @BindView(R.id.detail_content_frame) FrameLayout detailContent;
 
     @Inject protected SearchListFragmentPresenter mPresenter;
@@ -67,6 +67,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
             showListingItemDetails(null); //Initialize empty
         }
 
+        toolbar.setTitle(getResources().getString(R.string.app_name));
         return root;
     }
 
@@ -171,6 +172,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
         setLoadingIndicator(false);
 
     }
+
 
     private void setupRecyclerView() {
         this.searchListAdapter.setOnItemClickListener(onItemClickListener);

@@ -2,6 +2,8 @@ package com.lbbento.domain.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by lbbento on 30/07/2016.
  * Represents each Item inside Listings in API Object returned by the SearchEndpoint.
@@ -36,6 +38,12 @@ public class ListingItem {
 
     @SerializedName(value="SecondRetinaDisplayThumbUrl")
     private String secondThumbUrl;
+
+    @SerializedName(value="ImageUrls")
+    private List<String> imageUrls;
+
+    @SerializedName(value="AgencyLogoUrl")
+    private String agencyLogoUrl;
 
 
     public Long getAdId() {
@@ -109,5 +117,21 @@ public class ListingItem {
 
     public void setSecondThumbUrl(String secondThumbUrl) {
         this.secondThumbUrl = secondThumbUrl;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public String getAgencyLogoUrl() {
+        return agencyLogoUrl;
+    }
+
+    public void setAgencyLogoUrl(String agencyLogoUrl) {
+        this.agencyLogoUrl = agencyLogoUrl;
     }
 }

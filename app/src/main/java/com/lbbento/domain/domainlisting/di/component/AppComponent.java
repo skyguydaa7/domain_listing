@@ -3,9 +3,9 @@ package com.lbbento.domain.domainlisting.di.component;
 import android.content.Context;
 
 import com.lbbento.domain.data.repository.SearchRepository;
-import com.lbbento.domain.domainlisting.base.BaseActivity;
 import com.lbbento.domain.domainlisting.di.module.AppModule;
 import com.lbbento.domain.domainlisting.di.module.NetModule;
+import com.lbbento.domain.domainlisting.view.activity.BaseActivity;
 
 import javax.inject.Singleton;
 

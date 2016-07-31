@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.search;
+package com.lbbento.domain.domainlisting.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

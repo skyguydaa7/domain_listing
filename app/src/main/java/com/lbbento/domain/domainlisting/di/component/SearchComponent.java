@@ -2,7 +2,7 @@ package com.lbbento.domain.domainlisting.di.component;
 
 import com.lbbento.domain.domainlisting.di.ScopeActivity;
 import com.lbbento.domain.domainlisting.di.module.SearchModule;
-import com.lbbento.domain.domainlisting.search.SearchListFragment;
+import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
 
 import dagger.Component;
 

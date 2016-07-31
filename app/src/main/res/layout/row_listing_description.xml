@@ -5,20 +5,88 @@
     android:orientation="vertical"
     android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_weight="1"
+    android:layout_margin="@dimen/cardview_listing_description_margin"
     >
 
-    <TextView
-        android:id="@+id/price"
-        style="@style/AppTheme.SearchTextViewPrice" />
 
-    <TextView
-        android:id="@+id/features"
-        style="@style/AppTheme.SearchTextViewFeatures" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bed"/>
+
+            <TextView
+                android:id="@+id/featureBed"
+                style="@style/AppTheme.SearchTextViewFeatures" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bath"/>
+
+            <TextView
+                android:id="@+id/featureBath"
+                style="@style/AppTheme.SearchTextViewFeatures" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_car"/>
+
+            <TextView
+                android:id="@+id/featureCar"
+                style="@style/AppTheme.SearchTextViewFeatures" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/location"
         style="@style/AppTheme.SearchTextViewLocation" />
+
+
+    <ImageView
+        android:id="@+id/agencyLogo"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        />
+
 
 </LinearLayout>

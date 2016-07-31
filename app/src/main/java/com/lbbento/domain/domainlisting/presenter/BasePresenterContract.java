@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.base;
+package com.lbbento.domain.domainlisting.presenter;
 
 /**
  * Created by lbbento on 30/07/2016.

@@ -1,19 +1,24 @@
-package com.lbbento.domain.domainlisting.search;
+package com.lbbento.domain.domainlisting.view.adapter;
 
 import android.content.Context;
-import android.os.Parcelable;
+import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lbbento.domain.data.model.ListingItem;
 import com.lbbento.domain.domainlisting.R;
+import com.lbbento.domain.domainlisting.view.animation.DepthPageTransformer;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,26 +34,24 @@ import butterknife.ButterKnife;
  */
 
 public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private OnItemClickListener onItemClickListener;
     private static final int VIEW_TYPE_NORMAL = 0;
     private static final int VIEW_TYPE_ELITE = 1;
 
-    Context ctx;
+    private Context ctx;
+    private final LayoutInflater layoutInflater;
+    private DepthPageTransformer mDepthPageTransformer;
 
-
-    public interface OnItemClickListener {
-        void onUserItemClicked(ListingItem mListingItem);
-    }
 
     private List<ListingItem> listingItemCollection;
-    private final LayoutInflater layoutInflater;
 
-    private OnItemClickListener onItemClickListener;
 
-    public SearchListAdapter(Context ctx, LayoutInflater layoutInflater) {
+    public SearchListAdapter(Context ctx, DepthPageTransformer depthPageTransformer, LayoutInflater layoutInflater) {
 
         this.ctx = ctx;
         this.layoutInflater = layoutInflater;
         this.listingItemCollection = Collections.emptyList(); //Initialize empty
+        this.mDepthPageTransformer = depthPageTransformer;
     }
 
     @Override public int getItemCount() {
@@ -71,7 +74,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case VIEW_TYPE_ELITE:
                 return new ListingItemEliteViewHolder(this.layoutInflater.inflate(R.layout.row_listing_elite, parent, false));
             default:
-                return new ListingItemNormalViewHolder(this.layoutInflater.inflate(R.layout.row_listing, parent, false));
+                return new ListingItemNormalViewHolder(this.layoutInflater.inflate(R.layout.row_listing_normal, parent, false));
         }
 
     }
@@ -81,39 +84,64 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ListingItem mListingItem = this.listingItemCollection.get(position);
 
+
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_NORMAL:
-                ListingItemNormalViewHolder viewholder = (ListingItemNormalViewHolder) holder;
+                final ListingItemNormalViewHolder viewholder = (ListingItemNormalViewHolder) holder;
+                setAnimation(viewholder.cardView, position);
+
                 viewholder.textViewPrice.setText(mListingItem.getDisplayPrice());
-                viewholder.textViewFeatures.setText(String.format("%s %s, %s %s, %s %s" ,
+                viewholder.textViewFeatureBed.setText(String.format("%s %s",
                         mListingItem.getBedrooms().toString(),
-                        ctx.getResources().getString(R.string.card_description_bedrooms),
+                        ctx.getResources().getString(R.string.card_description_bedrooms)));
+                viewholder.textViewFeatureBath.setText(String.format("%s %s",
                         mListingItem.getBathrooms().toString(),
-                        ctx.getResources().getString(R.string.card_description_bathrooms),
+                        ctx.getResources().getString(R.string.card_description_bathrooms)));
+                viewholder.textViewFeatureCar.setText(String.format("%s %s",
                         mListingItem.getCarspaces().toString(),
-                        ctx.getResources().getString(R.string.card_description_carspaces)
-                ));
+                        ctx.getResources().getString(R.string.card_description_carspaces)));
                 viewholder.textViewLocation.setText(mListingItem.getDisplayableAddress());
-                Picasso.with(ctx).load(mListingItem.getThumbUrl()).placeholder(R.drawable.placeholder).into(viewholder.imageThumb);
+
+                Picasso.with(ctx).load(mListingItem.getAgencyLogoUrl()).into(viewholder.agencyLogo);
+                Picasso.with(ctx).load(mListingItem.getThumbUrl()).into(viewholder.imageThumb,
+                        new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                viewholder.progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
+                //Image filter
+                viewholder.imageThumb.setColorFilter(ctx.getResources().getColor(R.color.listing_image_filter), PorterDuff.Mode.SRC_ATOP);
                 break;
 
             case VIEW_TYPE_ELITE:
                 ListingItemEliteViewHolder viewholderElite = (ListingItemEliteViewHolder) holder;
+                setAnimation(viewholderElite.cardView, position);
 
                 viewholderElite.textViewPrice.setText(mListingItem.getDisplayPrice());
-                viewholderElite.textViewFeatures.setText(String.format("%s %s, %s %s, %s %s" ,
+                viewholderElite.textViewFeatureBed.setText(String.format("%s %s",
                         mListingItem.getBedrooms().toString(),
-                        ctx.getResources().getString(R.string.card_description_bedrooms),
+                        ctx.getResources().getString(R.string.card_description_bedrooms)));
+                viewholderElite.textViewFeatureBath.setText(String.format("%s %s",
                         mListingItem.getBathrooms().toString(),
-                        ctx.getResources().getString(R.string.card_description_bathrooms),
+                        ctx.getResources().getString(R.string.card_description_bathrooms)));
+                viewholderElite.textViewFeatureCar.setText(String.format("%s %s",
                         mListingItem.getCarspaces().toString(),
-                        ctx.getResources().getString(R.string.card_description_carspaces)
-                ));
+                        ctx.getResources().getString(R.string.card_description_carspaces)));
                 viewholderElite.textViewLocation.setText(mListingItem.getDisplayableAddress());
-                ArrayList<String> urls = new ArrayList<>();
+                Picasso.with(ctx).load(mListingItem.getAgencyLogoUrl()).into(viewholderElite.agencyLogo);
+
+                //Images
+                List<String> urls = new ArrayList<>();
                 urls.add(mListingItem.getThumbUrl());
                 urls.add(mListingItem.getSecondThumbUrl());
-                viewholderElite.imageSlidePager.setAdapter(new ImagePagerAdapter(ctx, urls));
+                viewholderElite.imageSlideView.setAdapter(new ImageSlideViewAdapter(ctx, urls));
+                viewholderElite.imageSlideView.setPageTransformer(true, mDepthPageTransformer);
                 break;
 
         }
@@ -151,10 +179,15 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     interface ListingItemViewHolder {};
 
     static class ListingItemNormalViewHolder extends RecyclerView.ViewHolder implements ListingItemViewHolder {
+        @BindView(R.id.cardView) CardView cardView;
         @BindView(R.id.price) TextView textViewPrice;
-        @BindView(R.id.features) TextView textViewFeatures;
+        @BindView(R.id.featureBed) TextView textViewFeatureBed;
+        @BindView(R.id.featureBath) TextView textViewFeatureBath;
+        @BindView(R.id.featureCar) TextView textViewFeatureCar;
         @BindView(R.id.location) TextView textViewLocation;
         @BindView(R.id.thumbImage) ImageView imageThumb;
+        @BindView(R.id.agencyLogo) ImageView agencyLogo;
+        @BindView(R.id.progressBar) ProgressBar progressBar;
 
         public ListingItemNormalViewHolder(View itemView) {
             super(itemView);
@@ -164,10 +197,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     static class ListingItemEliteViewHolder extends RecyclerView.ViewHolder implements ListingItemViewHolder {
+        @BindView(R.id.cardView) CardView cardView;
         @BindView(R.id.price) TextView textViewPrice;
-        @BindView(R.id.features) TextView textViewFeatures;
+        @BindView(R.id.featureBed) TextView textViewFeatureBed;
+        @BindView(R.id.featureBath) TextView textViewFeatureBath;
+        @BindView(R.id.featureCar) TextView textViewFeatureCar;
         @BindView(R.id.location) TextView textViewLocation;
-        @Nullable @BindView(R.id.imageSlidePager) ViewPager imageSlidePager;
+        @BindView(R.id.agencyLogo) ImageView agencyLogo;
+        @Nullable @BindView(R.id.imageSlideView) ViewPager imageSlideView;
 
         public ListingItemEliteViewHolder(View itemView) {
             super(itemView);
@@ -177,61 +214,29 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
 
-    public class ImagePagerAdapter extends PagerAdapter {
 
-
-        private ArrayList<String> imageLinks;
-        private LayoutInflater inflater;
-        private Context context;
-
-
-        public ImagePagerAdapter(Context context,ArrayList<String> imageLinks) {
-            this.context = context;
-            this.imageLinks = imageLinks;
-            inflater = LayoutInflater.from(context);
+    private int lastPosition = -1;
+    /**
+     * Here is the key method to apply the animation
+     */
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition && position < 2)
+        {
+            Animation animation = AnimationUtils.loadAnimation(ctx, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public int getCount() {
-            return imageLinks.size();
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup view, int position) {
-            View imageLayout = inflater.inflate(R.layout.page_image, view, false);
-
-            assert imageLayout != null;
-
-            final ImageView imageView = (ImageView) imageLayout
-                    .findViewById(R.id.thumbImage);
-
-            Picasso.with(ctx).load(imageLinks.get(position)).placeholder(R.drawable.placeholder).into(imageView);
-            view.addView(imageLayout, 0);
-
-            return imageLayout;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view.equals(object);
-        }
-
-        @Override
-        public void restoreState(Parcelable state, ClassLoader loader) {
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
+    }
 
 
+
+    public interface OnItemClickListener {
+        void onUserItemClicked(ListingItem mListingItem);
     }
 }
+
+
 
 

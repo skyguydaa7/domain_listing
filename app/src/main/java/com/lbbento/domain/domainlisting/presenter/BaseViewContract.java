@@ -1,4 +1,4 @@
-package com.lbbento.domain.domainlisting.base;
+package com.lbbento.domain.domainlisting.presenter;
 
 
 /**
@@ -6,7 +6,7 @@ package com.lbbento.domain.domainlisting.base;
  */
 
 
-public interface BaseFragmentContract<T>  {
+public interface BaseViewContract<T>  {
 
     void setLoadingIndicator(boolean active);
 

@@ -12,9 +12,10 @@
 
     <!-- Card Listing Colors -->
     <color name="listing_background">@android:color/white</color>
-    <color name="listing_price_active">#3F51B5</color>
+    <color name="listing_price_active">@android:color/white</color>
     <color name="listing_features_active">@android:color/primary_text_light</color>
     <color name="listing_location_active">@android:color/darker_gray</color>
 
+    <color name="listing_image_filter">#40000000</color>
 
 </resources>

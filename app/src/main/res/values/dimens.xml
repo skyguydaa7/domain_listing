@@ -5,8 +5,11 @@
 
     <!-- Listing CardView -->
     <dimen name="cardview_listing_padding">5dp</dimen>
-    <dimen name="cardview_listing_margin">5dp</dimen>
-    <dimen name="cardview_image_height">150dp</dimen>
+    <dimen name="cardview_listing_margin">4dp</dimen>
+    <dimen name="cardview_image_height_normal">120dp</dimen>
+    <dimen name="cardview_image_height_elite">200dp</dimen>
+
+    <dimen name="cardview_listing_description_margin">8dp</dimen>
 
 
 

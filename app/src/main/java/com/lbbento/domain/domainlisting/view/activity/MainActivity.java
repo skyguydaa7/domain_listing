@@ -1,13 +1,12 @@
-package com.lbbento.domain.domainlisting.main;
+package com.lbbento.domain.domainlisting.view.activity;
 
 import android.os.Bundle;
 
 import com.lbbento.domain.domainlisting.R;
-import com.lbbento.domain.domainlisting.base.BaseActivity;
 import com.lbbento.domain.domainlisting.di.component.DaggerSearchComponent;
 import com.lbbento.domain.domainlisting.di.component.SearchComponent;
 import com.lbbento.domain.domainlisting.di.module.SearchModule;
-import com.lbbento.domain.domainlisting.search.SearchListFragment;
+import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
 
 public class MainActivity extends BaseActivity {
 
