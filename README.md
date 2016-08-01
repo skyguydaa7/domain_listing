@@ -1,4 +1,4 @@
-<p><span style="font-size:22px;">Domain App Example</span><br />
+<p><span style="font-size:22px;"><strong>Domain App Example</strong></span><br />
 
 <br />
 
