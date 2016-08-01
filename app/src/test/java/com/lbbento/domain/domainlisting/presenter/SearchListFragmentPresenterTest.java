@@ -44,18 +44,12 @@ public class SearchListFragmentPresenterTest {
 
     @Test
     public void testSearchListFragmentPresenter() {
-        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchModel>empty());
-        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.just(mockSearchModel));
+        when(mSearchRepository.getMapSearch(anyString(), anyString(), anyString(),anyString())).thenReturn(Observable.just(mockSearchModel));
 
-        TestSubscriber<SearchModel> subscriber = new TestSubscriber<>();
-        mSearchRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
-        subscriber.awaitTerminalEvent();
-
-        given(mSearchRepository.getMapSearch(anyString(), anyString(), anyString(), anyString())).willReturn(Observable.just(mockSearchModel));
-
-        mSearchListFragmentPresenter.loadSearch();
+        mSearchListFragmentPresenter.loadView(mockSearchModel);
 
         verify(mockSearchView).showSearch(any(SearchModel.class));
+
     }
 
 

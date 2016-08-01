@@ -8,7 +8,7 @@ import com.lbbento.domain.domainlisting.di.component.SearchComponent;
 import com.lbbento.domain.domainlisting.di.module.SearchModule;
 import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
 
-public class MainActivity extends BaseActivity {
+public class SearchListActivity extends BaseActivity {
 
 
     //DI Components

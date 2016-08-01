@@ -19,7 +19,7 @@ import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
 import com.lbbento.domain.domainlisting.presenter.SearchListFragmentContract;
 import com.lbbento.domain.domainlisting.presenter.SearchListFragmentPresenter;
 import com.lbbento.domain.domainlisting.view.adapter.SearchListLayoutManager;
-import com.lbbento.domain.domainlisting.view.activity.MainActivity;
+import com.lbbento.domain.domainlisting.view.activity.SearchListActivity;
 
 import javax.inject.Inject;
 
@@ -88,7 +88,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
      */
     @SuppressWarnings("unchecked")
     protected SearchComponent getSearchComponent() {
-        return ((MainActivity) getActivity()).getSearchComponent();
+        return ((SearchListActivity) getActivity()).getSearchComponent();
     }
 
     @Override

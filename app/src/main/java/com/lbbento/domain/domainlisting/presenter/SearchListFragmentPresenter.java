@@ -20,8 +20,8 @@ import rx.subscriptions.Subscriptions;
 
 public class SearchListFragmentPresenter implements SearchListFragmentContract.Presenter<SearchListFragmentContract.View> {
 
-    private final SearchRepository mSearchRepository;
-    private SearchListFragmentContract.View view;
+    protected final SearchRepository mSearchRepository;
+    protected SearchListFragmentContract.View view;
 
     @Nullable
     private Subscription mSubscription = Subscriptions.empty();
@@ -78,13 +78,19 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
 
                     @Override
                     public void onNext(SearchModel search) {
-                        view.showSearch(search);
+                        loadView(search);
                     }
                 });
+    }
+
+    @Override
+    public void loadView(SearchModel search) {
+        view.showSearch(search);
     }
 
     public void onListingItemClicked(ListingItem mListingItem) {
         view.showListingItemDetails(mListingItem);
     }
+
 
 }

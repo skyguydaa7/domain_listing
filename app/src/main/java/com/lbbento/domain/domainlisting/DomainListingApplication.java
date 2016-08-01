@@ -30,4 +30,11 @@ public class DomainListingApplication extends android.app.Application {
         public AppComponent getAppComponent() {
                 return this.appComponent;
         }
+
+        /**
+         * Visible only for testing purposes.
+         */
+        public void setTestComponent(AppComponent testingComponent) {
+                appComponent = testingComponent;
+        }
 }

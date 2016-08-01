@@ -26,6 +26,8 @@ public interface SearchListFragmentContract {
         // No params - exercise
         void loadSearch();
 
+        void loadView(SearchModel search);
+
         void refresh();
 
     }
