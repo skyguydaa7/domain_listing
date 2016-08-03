@@ -3,10 +3,9 @@ package com.lbbento.domain.domainlisting.presenter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.lbbento.domain.data.model.ListingItem;
-import com.lbbento.domain.data.model.SearchModel;
-import com.lbbento.domain.data.repository.SearchRepository;
-import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
+import com.lbbento.domain.data.model.ListingItemEntity;
+import com.lbbento.domain.data.model.SearchEntity;
+import com.lbbento.domain.domain.repository.SearchRepository;
 
 import rx.Observer;
 import rx.Subscription;
@@ -65,7 +64,7 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
                 .getMapSearch(mode, suburb, pcodes, state)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SearchModel>() {
+                .subscribe(new Observer<SearchEntity>() {
                     @Override
                     public void onCompleted() {
                         view.setLoadingIndicator(false);
@@ -77,19 +76,19 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
                     }
 
                     @Override
-                    public void onNext(SearchModel search) {
+                    public void onNext(SearchEntity search) {
                         loadView(search);
                     }
                 });
     }
 
     @Override
-    public void loadView(SearchModel search) {
+    public void loadView(SearchEntity search) {
         view.showSearch(search);
     }
 
-    public void onListingItemClicked(ListingItem mListingItem) {
-        view.showListingItemDetails(mListingItem);
+    public void onListingItemClicked(ListingItemEntity mListingItemEntity) {
+        view.showListingItemDetails(mListingItemEntity);
     }
 
 

@@ -1,4 +1,4 @@
-package com.lbbento.domain.data.model;
+package com.lbbento.domain.domainlisting.view.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Represents each Item inside Listings in API Object returned by the SearchEndpoint.
  */
 
-public class ListingItem {
+public class ListingItemViewModel {
 
 
     @SerializedName(value="AdId")

@@ -1,7 +1,7 @@
 package com.lbbento.domain.data.repository;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchModel;
+import com.lbbento.domain.data.model.SearchEntity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import java.util.NoSuchElementException;
 
 import rx.Observable;
 import rx.observers.TestSubscriber;
@@ -24,13 +22,14 @@ import static org.mockito.Mockito.when;
  * Created by lbbento on 1/08/2016.
  */
 
-public class SearchRepositoryTest   {
+public class SearchDataRepositoryTest {
 
-    private SearchRepository searchRepository;
+    private SearchDataRepository searchDataRepository;
 
     @Mock SearchDataSource mockSearchRemoteDataSource;
     @Mock SearchDataSource mockSearchLocalDataSource;
-    @Mock SearchModel mockSearchModel;
+    @Mock
+    SearchEntity mockSearchEntity;
 
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -39,7 +38,7 @@ public class SearchRepositoryTest   {
     public void setUp() throws  Exception {
         MockitoAnnotations.initMocks(this);
 
-        searchRepository = new SearchRepository(mockSearchRemoteDataSource, mockSearchLocalDataSource);
+        searchDataRepository = new SearchDataRepository(mockSearchRemoteDataSource, mockSearchLocalDataSource);
 
     }
 
@@ -48,15 +47,15 @@ public class SearchRepositoryTest   {
      */
     @Test public void testGetRemoteMapSearch() {
 
-        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchModel>empty());
-        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.just(mockSearchModel));
+        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchEntity>empty());
+        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.just(mockSearchEntity));
 
-        TestSubscriber<SearchModel> subscriber = new TestSubscriber<>();
-        searchRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
+        TestSubscriber<SearchEntity> subscriber = new TestSubscriber<>();
+        searchDataRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
         subscriber.assertNoErrors();
-        subscriber.assertValue(mockSearchModel);
+        subscriber.assertValue(mockSearchEntity);
 
         verify(mockSearchRemoteDataSource, only()).getMapSearch("mode", "sub", "pcodes", "state");
     }
@@ -66,15 +65,15 @@ public class SearchRepositoryTest   {
      */
     @Test public void testGetLocalMapSearch() {
 
-        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.just(mockSearchModel));
-        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchModel>empty());
+        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.just(mockSearchEntity));
+        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchEntity>empty());
 
-        TestSubscriber<SearchModel> subscriber = new TestSubscriber<>();
-        searchRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
+        TestSubscriber<SearchEntity> subscriber = new TestSubscriber<>();
+        searchDataRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
         subscriber.assertNoErrors();
-        subscriber.assertValue(mockSearchModel);
+        subscriber.assertValue(mockSearchEntity);
 
         verify(mockSearchRemoteDataSource, only()).getMapSearch("mode", "sub", "pcodes", "state");
     }
@@ -84,11 +83,11 @@ public class SearchRepositoryTest   {
      */
     @Test public void testGetMapSearchNotAvailable() {
 
-        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchModel>empty());
-        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchModel>empty());
+        when(mockSearchLocalDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchEntity>empty());
+        when(mockSearchRemoteDataSource.getMapSearch("mode", "sub", "pcodes", "state")).thenReturn(Observable.<SearchEntity>empty());
 
-        TestSubscriber<SearchModel> subscriber = new TestSubscriber<>();
-        searchRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
+        TestSubscriber<SearchEntity> subscriber = new TestSubscriber<>();
+        searchDataRepository.getMapSearch("mode", "sub", "pcodes", "state").subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
         subscriber.assertNoValues();

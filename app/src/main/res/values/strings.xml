@@ -5,7 +5,7 @@
     <!-- Common -->
     <string name="button_retry">Retry</string>
 
-    <!-- ListingItem CardView -->
+    <!-- ListingItemModel CardView -->
     <string name="card_description_bedrooms">bed</string>
     <string name="card_description_bathrooms">bath</string>
     <string name="card_description_carspaces">car</string>

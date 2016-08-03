@@ -3,7 +3,7 @@ package com.lbbento.domain.data.source.remote;
 import android.support.annotation.NonNull;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchModel;
+import com.lbbento.domain.data.model.SearchEntity;
 import com.lbbento.domain.data.source.remote.api.SearchAPIService;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class SearchRemoteDataSource implements SearchDataSource {
     }
 
     @Override
-    public Observable<SearchModel> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
+    public Observable<SearchEntity> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
 
 
         //Usually, we would test each param and build our params string - just keeping the example simples as it just does one call.

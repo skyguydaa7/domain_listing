@@ -9,10 +9,10 @@ import java.util.List;
  * Represents the mapping to the API Object returned by the SearchEndpoint , ListingResults
  */
 
-public class ListingResult {
+public class ListingResultEntity {
 
     @SerializedName(value="Listings")
-    private List<ListingItem> listingItems;
+    private List<ListingItemEntity> listingItemEntities;
 
     @SerializedName(value="ResultsReturned")
     private Integer resultsReturned;
@@ -20,16 +20,16 @@ public class ListingResult {
     @SerializedName(value="ResultsTotal")
     private Integer resultsTotal;
 
-    public ListingResult(List<ListingItem> listingItems) {
-        this.listingItems = listingItems;
+    public ListingResultEntity(List<ListingItemEntity> listingItemEntities) {
+        this.listingItemEntities = listingItemEntities;
     }
 
-    public List<ListingItem> getListingItems() {
-        return listingItems;
+    public List<ListingItemEntity> getListingItemEntities() {
+        return listingItemEntities;
     }
 
-    public void setListingItems(List<ListingItem> listingItems) {
-        this.listingItems = listingItems;
+    public void setListingItemEntities(List<ListingItemEntity> listingItemEntities) {
+        this.listingItemEntities = listingItemEntities;
     }
 
     public Integer getResultsReturned() {

@@ -1,6 +1,6 @@
 package com.lbbento.domain.data.source.remote.api;
 
-import com.lbbento.domain.data.model.SearchModel;
+import com.lbbento.domain.data.model.SearchEntity;
 
 import java.util.Map;
 
@@ -16,6 +16,6 @@ import rx.Observable;
 public interface SearchAPIService {
 
     @GET("searchservice.svc/mapsearch")
-    Observable<SearchModel> getMapSearch(@QueryMap Map<String, String> searchParams);
+    Observable<SearchEntity> getMapSearch(@QueryMap Map<String, String> searchParams);
 
 }

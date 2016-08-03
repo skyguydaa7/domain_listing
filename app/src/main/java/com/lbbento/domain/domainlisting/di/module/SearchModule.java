@@ -3,7 +3,7 @@ package com.lbbento.domain.domainlisting.di.module;
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import com.lbbento.domain.data.repository.SearchRepository;
+import com.lbbento.domain.domain.repository.SearchRepository;
 import com.lbbento.domain.domainlisting.di.ScopeActivity;
 import com.lbbento.domain.domainlisting.presenter.SearchListFragmentPresenter;
 import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
@@ -40,6 +40,8 @@ public class SearchModule {
     DepthPageTransformer provideDepthPageTransformer() {
         return new DepthPageTransformer();
     }
+
+
 
 
 }

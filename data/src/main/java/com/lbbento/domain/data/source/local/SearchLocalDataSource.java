@@ -3,7 +3,7 @@ package com.lbbento.domain.data.source.local;
 import android.support.annotation.NonNull;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchModel;
+import com.lbbento.domain.data.model.SearchEntity;
 
 import rx.Observable;
 
@@ -19,7 +19,7 @@ public class SearchLocalDataSource implements SearchDataSource {
     }
 
     @Override
-    public Observable<SearchModel> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
+    public Observable<SearchEntity> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
 
         //TODO - GET FROM LOCAL DATABASE - ContentProvider
         return Observable.just(null);

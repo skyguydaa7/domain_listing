@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.repository.SearchRepository;
+import com.lbbento.domain.domain.repository.SearchRepository;
 import com.lbbento.domain.data.source.local.SearchLocalDataSource;
 import com.lbbento.domain.data.source.remote.SearchRemoteDataSource;
 import com.lbbento.domain.data.source.remote.api.SearchAPIService;
@@ -69,5 +69,9 @@ public class AppModule {
         return new SearchRepository(searchRemoreDataSource, searchLocalDataSource);
     }
 
+    @Provides @Singleton GetSearchUseCase provideGetSearch(UserRepository userRepository, ThreadExecutor threadExecutor,
+                       PostExecutionThread postExecutionThread) {
 
-}
+
+
+    }

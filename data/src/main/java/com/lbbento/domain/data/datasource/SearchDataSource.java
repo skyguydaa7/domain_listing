@@ -1,7 +1,9 @@
 package com.lbbento.domain.data.datasource;
 
 import android.support.annotation.NonNull;
-import com.lbbento.domain.data.model.SearchModel;
+import android.support.annotation.Nullable;
+
+import com.lbbento.domain.data.model.SearchEntity;
 
 import rx.Observable;
 
@@ -12,6 +14,6 @@ import rx.Observable;
 
 public interface SearchDataSource {
 
-    Observable<SearchModel> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state);
+    Observable<SearchEntity> getMapSearch(@Nullable String mode, @Nullable String sub, @Nullable String pcodes, @NonNull String state);
 
 }

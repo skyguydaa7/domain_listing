@@ -1,8 +1,8 @@
 package com.lbbento.domain.domainlisting.presenter;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchModel;
-import com.lbbento.domain.data.repository.SearchRepository;
+import com.lbbento.domain.data.model.SearchEntity;
+import com.lbbento.domain.domain.repository.SearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +29,8 @@ public class SearchListFragmentPresenterTest {
     @Mock SearchDataSource mockSearchRemoteDataSource;
     @Mock SearchDataSource mockSearchLocalDataSource;
     @Mock SearchListFragmentContract.View mockSearchView;
-    @Mock SearchModel mockSearchModel;
+    @Mock
+    SearchEntity mockSearchEntity;
 
     @Before
     public void setUp() {
@@ -44,11 +43,11 @@ public class SearchListFragmentPresenterTest {
 
     @Test
     public void testSearchListFragmentPresenter() {
-        when(mSearchRepository.getMapSearch(anyString(), anyString(), anyString(),anyString())).thenReturn(Observable.just(mockSearchModel));
+        when(mSearchRepository.getMapSearch(anyString(), anyString(), anyString(),anyString())).thenReturn(Observable.just(mockSearchEntity));
 
-        mSearchListFragmentPresenter.loadView(mockSearchModel);
+        mSearchListFragmentPresenter.loadView(mockSearchEntity);
 
-        verify(mockSearchView).showSearch(any(SearchModel.class));
+        verify(mockSearchView).showSearch(any(SearchEntity.class));
 
     }
 

@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.lbbento.domain.data.model.ListingItem;
-import com.lbbento.domain.data.model.SearchModel;
+import com.lbbento.domain.data.model.ListingItemEntity;
+import com.lbbento.domain.data.model.SearchEntity;
 import com.lbbento.domain.domainlisting.R;
 import com.lbbento.domain.domainlisting.di.component.SearchComponent;
 import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
@@ -121,12 +121,12 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
 
 
     @Override
-    public void showSearch(SearchModel search) {
+    public void showSearch(SearchEntity search) {
 
         if (search != null) {
 
-            if (search.getListingResult() != null && search.getListingResult().getListingItems() != null) {
-                this.searchListAdapter.setListingItemCollection(search.getListingResult().getListingItems());
+            if (search.getListingResultEntity() != null && search.getListingResultEntity().getListingItemEntities() != null) {
+                this.searchListAdapter.setListingItemEntityCollection(search.getListingResultEntity().getListingItemEntities());
             }
         }
 
@@ -136,12 +136,12 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     /**
      * Show Listingitem Details when possible.
      * In this example it just show the details if it's a  7" tablet or bigger, in landscape mode.(Could've defined another rules, however, there was no strict rules so I just defined this usecase). Lucas Bento
-     * @param listingItem
+     * @param listingItemEntity
      */
     @Override
-    public void showListingItemDetails(ListingItem listingItem) {
+    public void showListingItemDetails(ListingItemEntity listingItemEntity) {
         if (detailContent != null) {
-            String id = (listingItem != null ? listingItem.getAdId().toString() : null);
+            String id = (listingItemEntity != null ? listingItemEntity.getAdId().toString() : null);
             //Initialize Detail Screen
             getChildFragmentManager()
                     .beginTransaction()
@@ -186,7 +186,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
 
     private SearchListAdapter.OnItemClickListener onItemClickListener =
             new SearchListAdapter.OnItemClickListener() {
-                @Override public void onUserItemClicked(ListingItem userModel) {
+                @Override public void onUserItemClicked(ListingItemEntity userModel) {
                     if (SearchListFragment.this.mPresenter != null && userModel != null) {
                         SearchListFragment.this.mPresenter.onListingItemClicked(userModel);
                     }
