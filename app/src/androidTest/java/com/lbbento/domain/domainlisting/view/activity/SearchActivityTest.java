@@ -7,7 +7,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
 
 import com.lbbento.domain.domainlisting.R;
-import com.lbbento.domain.domainlisting.view.fragment.SearchListFragment;
 
 import org.junit.Rule;
 import org.junit.Test;
