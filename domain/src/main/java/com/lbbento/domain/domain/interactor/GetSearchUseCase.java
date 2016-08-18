@@ -1,7 +1,6 @@
 package com.lbbento.domain.domain.interactor;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.lbbento.domain.domain.executor.PostExecutionThread;
 import com.lbbento.domain.domain.executor.ThreadExecutor;
@@ -17,20 +16,24 @@ import rx.Observable;
 public class GetSearchUseCase extends UseCase {
 
     //Params
-    private final String mode;
-    private final String suburb;
-    private final String pCodes;
-    private final String state;
+    private String mode;
+    private String sub;
+    private String pcodes;
+    private String state;
 
     private final SearchRepository mSearchRepository;
 
-    public GetSearchUseCase(@NonNull SearchParams, SearchRepository searchRepository, ThreadExecutor threadExecutor,
-                            PostExecutionThread postExecutionThread) {
+    public GetSearchUseCase(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state, @NonNull SearchRepository searchRepository, @NonNull ThreadExecutor threadExecutor,
+                            @NonNull PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.mSearchRepository = searchRepository;
+        this.mode = mode;
+        this.sub = sub;
+        this.pcodes = pcodes;
+        this.state = state;
     }
 
     @Override public Observable buildUseCaseObservable() {
-        return this.mSearchRepository.users();
+        return this.mSearchRepository.getMapSearch(mode, sub, pcodes, state);
     }
 }

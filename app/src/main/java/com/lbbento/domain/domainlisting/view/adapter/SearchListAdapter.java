@@ -15,9 +15,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.lbbento.domain.data.model.ListingItemEntity;
+import com.lbbento.domain.data.entities.ListingItemEntity;
 import com.lbbento.domain.domainlisting.R;
 import com.lbbento.domain.domainlisting.view.animation.DepthPageTransformer;
+import com.lbbento.domain.domainlisting.view.model.ListingItemViewModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -43,25 +44,25 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private DepthPageTransformer mDepthPageTransformer;
 
 
-    private List<ListingItemEntity> listingItemEntityCollection;
+    private List<ListingItemViewModel> listingItemViewModelCollection;
 
 
     public SearchListAdapter(Context ctx, DepthPageTransformer depthPageTransformer, LayoutInflater layoutInflater) {
 
         this.ctx = ctx;
         this.layoutInflater = layoutInflater;
-        this.listingItemEntityCollection = Collections.emptyList(); //Initialize empty
+        this.listingItemViewModelCollection = Collections.emptyList(); //Initialize empty
         this.mDepthPageTransformer = depthPageTransformer;
     }
 
     @Override public int getItemCount() {
-        return (this.listingItemEntityCollection != null) ? this.listingItemEntityCollection.size() : 0;
+        return (this.listingItemViewModelCollection != null) ? this.listingItemViewModelCollection.size() : 0;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position >= 0) {
-            ListingItemEntity item = listingItemEntityCollection.get(position);
+            ListingItemViewModel item = listingItemViewModelCollection.get(position);
             return (item.isElite() ? VIEW_TYPE_ELITE : VIEW_TYPE_NORMAL);
         }
         return super.getItemViewType(position);
@@ -82,7 +83,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        final ListingItemEntity mListingItemEntity = this.listingItemEntityCollection.get(position);
+        final ListingItemViewModel mListingItemViewModel = this.listingItemViewModelCollection.get(position);
 
 
         switch (holder.getItemViewType()) {
@@ -90,20 +91,20 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 final ListingItemNormalViewHolder viewholder = (ListingItemNormalViewHolder) holder;
                 setAnimation(viewholder.cardView, position);
 
-                viewholder.textViewPrice.setText(mListingItemEntity.getDisplayPrice());
+                viewholder.textViewPrice.setText(mListingItemViewModel.getDisplayPrice());
                 viewholder.textViewFeatureBed.setText(String.format("%s %s",
-                        mListingItemEntity.getBedrooms().toString(),
+                        mListingItemViewModel.getBedrooms().toString(),
                         ctx.getResources().getString(R.string.card_description_bedrooms)));
                 viewholder.textViewFeatureBath.setText(String.format("%s %s",
-                        mListingItemEntity.getBathrooms().toString(),
+                        mListingItemViewModel.getBathrooms().toString(),
                         ctx.getResources().getString(R.string.card_description_bathrooms)));
                 viewholder.textViewFeatureCar.setText(String.format("%s %s",
-                        mListingItemEntity.getCarspaces().toString(),
+                        mListingItemViewModel.getCarspaces().toString(),
                         ctx.getResources().getString(R.string.card_description_carspaces)));
-                viewholder.textViewLocation.setText(mListingItemEntity.getDisplayableAddress());
+                viewholder.textViewLocation.setText(mListingItemViewModel.getDisplayableAddress());
 
-                Picasso.with(ctx).load(mListingItemEntity.getAgencyLogoUrl()).into(viewholder.agencyLogo);
-                Picasso.with(ctx).load(mListingItemEntity.getThumbUrl()).into(viewholder.imageThumb,
+                Picasso.with(ctx).load(mListingItemViewModel.getAgencyLogoUrl()).into(viewholder.agencyLogo);
+                Picasso.with(ctx).load(mListingItemViewModel.getThumbUrl()).into(viewholder.imageThumb,
                         new Callback() {
                             @Override
                             public void onSuccess() {
@@ -123,23 +124,23 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ListingItemEliteViewHolder viewholderElite = (ListingItemEliteViewHolder) holder;
                 setAnimation(viewholderElite.cardView, position);
 
-                viewholderElite.textViewPrice.setText(mListingItemEntity.getDisplayPrice());
+                viewholderElite.textViewPrice.setText(mListingItemViewModel.getDisplayPrice());
                 viewholderElite.textViewFeatureBed.setText(String.format("%s %s",
-                        mListingItemEntity.getBedrooms().toString(),
+                        mListingItemViewModel.getBedrooms().toString(),
                         ctx.getResources().getString(R.string.card_description_bedrooms)));
                 viewholderElite.textViewFeatureBath.setText(String.format("%s %s",
-                        mListingItemEntity.getBathrooms().toString(),
+                        mListingItemViewModel.getBathrooms().toString(),
                         ctx.getResources().getString(R.string.card_description_bathrooms)));
                 viewholderElite.textViewFeatureCar.setText(String.format("%s %s",
-                        mListingItemEntity.getCarspaces().toString(),
+                        mListingItemViewModel.getCarspaces().toString(),
                         ctx.getResources().getString(R.string.card_description_carspaces)));
-                viewholderElite.textViewLocation.setText(mListingItemEntity.getDisplayableAddress());
-                Picasso.with(ctx).load(mListingItemEntity.getAgencyLogoUrl()).into(viewholderElite.agencyLogo);
+                viewholderElite.textViewLocation.setText(mListingItemViewModel.getDisplayableAddress());
+                Picasso.with(ctx).load(mListingItemViewModel.getAgencyLogoUrl()).into(viewholderElite.agencyLogo);
 
                 //Images
                 List<String> urls = new ArrayList<>();
-                urls.add(mListingItemEntity.getThumbUrl());
-                urls.add(mListingItemEntity.getSecondThumbUrl());
+                urls.add(mListingItemViewModel.getThumbUrl());
+                urls.add(mListingItemViewModel.getSecondThumbUrl());
                 viewholderElite.imageSlideView.setAdapter(new ImageSlideViewAdapter(ctx, urls));
                 viewholderElite.imageSlideView.setPageTransformer(true, mDepthPageTransformer);
                 break;
@@ -150,7 +151,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (SearchListAdapter.this.onItemClickListener != null) {
-                    SearchListAdapter.this.onItemClickListener.onUserItemClicked(mListingItemEntity);
+                    SearchListAdapter.this.onItemClickListener.onUserItemClicked(mListingItemViewModel);
                 }
             }
         });
@@ -160,9 +161,9 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return position;
     }
 
-    public void setListingItemEntityCollection(List<ListingItemEntity> listingItemEntityCollection) {
-        this.validateListingItemCollection(listingItemEntityCollection);
-        this.listingItemEntityCollection = listingItemEntityCollection;
+    public void setListingItemEntityCollection(List<ListingItemViewModel> listingItemViewModelCollection) {
+        this.validateListingItemCollection(listingItemViewModelCollection);
+        this.listingItemViewModelCollection = listingItemViewModelCollection;
         this.notifyDataSetChanged();
     }
 
@@ -170,8 +171,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.onItemClickListener = onItemClickListener;
     }
 
-    private void validateListingItemCollection(List<ListingItemEntity> listingItemEntityCollection) {
-        if (listingItemEntityCollection == null) {
+    private void validateListingItemCollection(List<ListingItemViewModel> listingItemViewModelCollection) {
+        if (listingItemViewModelCollection == null) {
             throw new IllegalArgumentException("The list cannot be null");
         }
     }
@@ -233,7 +234,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public interface OnItemClickListener {
-        void onUserItemClicked(ListingItemEntity mListingItemEntity);
+        void onUserItemClicked(ListingItemViewModel mListingItemViewModel);
     }
 }
 

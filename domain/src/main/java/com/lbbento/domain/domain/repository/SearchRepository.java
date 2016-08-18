@@ -1,7 +1,6 @@
 package com.lbbento.domain.domain.repository;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.lbbento.domain.domain.model.SearchModel;
 
@@ -17,10 +16,10 @@ public interface SearchRepository {
     /**
      * Get an {@link rx.Observable} which will emit a {@link SearchModel}.
      *
-     * @param mode Search mode
-     * @param sub  Suburb to filter by
-     * @param pcodes PCodes list
-     * @param  state State to filter by
+     * @param mode = search mode
+     * @param sub = search suburb to filter
+     * @param pcodes - search pcodes to filter
+     * @param state - search state to filter
      */
-    Observable<SearchModel> search(@Nullable String mode, @Nullable String sub, @Nullable String pcodes, @NonNull String state);
+    Observable<SearchModel> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state);
 }

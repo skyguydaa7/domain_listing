@@ -1,4 +1,4 @@
-package com.lbbento.domain.data.model;
+package com.lbbento.domain.data.entities;
 
 import com.google.gson.annotations.SerializedName;
 

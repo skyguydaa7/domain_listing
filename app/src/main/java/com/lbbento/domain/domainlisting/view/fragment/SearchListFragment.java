@@ -11,15 +11,15 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.lbbento.domain.data.model.ListingItemEntity;
-import com.lbbento.domain.data.model.SearchEntity;
 import com.lbbento.domain.domainlisting.R;
 import com.lbbento.domain.domainlisting.di.component.SearchComponent;
-import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
 import com.lbbento.domain.domainlisting.presenter.SearchListFragmentContract;
 import com.lbbento.domain.domainlisting.presenter.SearchListFragmentPresenter;
-import com.lbbento.domain.domainlisting.view.adapter.SearchListLayoutManager;
 import com.lbbento.domain.domainlisting.view.activity.SearchListActivity;
+import com.lbbento.domain.domainlisting.view.adapter.SearchListAdapter;
+import com.lbbento.domain.domainlisting.view.adapter.SearchListLayoutManager;
+import com.lbbento.domain.domainlisting.view.model.ListingItemViewModel;
+import com.lbbento.domain.domainlisting.view.model.SearchViewModel;
 
 import javax.inject.Inject;
 
@@ -65,7 +65,7 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
         setupRecyclerView();
 
         if (savedInstanceState == null) {
-            showListingItemDetails(null); //Initialize empty
+            this.showListingItemDetails(null); //Initialize empty
         }
 
         toolbar.setTitle(getResources().getString(R.string.app_name));
@@ -121,12 +121,12 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
 
 
     @Override
-    public void showSearch(SearchEntity search) {
+    public void showSearch(SearchViewModel search) {
 
         if (search != null) {
 
-            if (search.getListingResultEntity() != null && search.getListingResultEntity().getListingItemEntities() != null) {
-                this.searchListAdapter.setListingItemEntityCollection(search.getListingResultEntity().getListingItemEntities());
+            if (search.getListingItemEntities() != null ) {
+                this.searchListAdapter.setListingItemEntityCollection(search.getListingItemEntities());
             }
         }
 
@@ -136,12 +136,12 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     /**
      * Show Listingitem Details when possible.
      * In this example it just show the details if it's a  7" tablet or bigger, in landscape mode.(Could've defined another rules, however, there was no strict rules so I just defined this usecase). Lucas Bento
-     * @param listingItemEntity
+     * @param mListingItemViewModel
      */
     @Override
-    public void showListingItemDetails(ListingItemEntity listingItemEntity) {
+    public void showListingItemDetails(ListingItemViewModel mListingItemViewModel) {
         if (detailContent != null) {
-            String id = (listingItemEntity != null ? listingItemEntity.getAdId().toString() : null);
+            String id = (mListingItemViewModel != null ? mListingItemViewModel.getAdId().toString() : null);
             //Initialize Detail Screen
             getChildFragmentManager()
                     .beginTransaction()
@@ -167,12 +167,12 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     }
 
 
-    @Override
-    public void showNotFound() {
-        //TODO Show not found
-        setLoadingIndicator(false);
-
-    }
+//    @Override
+//    public void showNotFound() {
+//        //TODO Show not found
+//        setLoadingIndicator(false);
+//
+//    }
 
     @OnClick(R.id.bt_retry) void onButtonRetryClick() {
         mPresenter.loadSearch(); //Exercise - no parameters
@@ -186,9 +186,9 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
 
     private SearchListAdapter.OnItemClickListener onItemClickListener =
             new SearchListAdapter.OnItemClickListener() {
-                @Override public void onUserItemClicked(ListingItemEntity userModel) {
-                    if (SearchListFragment.this.mPresenter != null && userModel != null) {
-                        SearchListFragment.this.mPresenter.onListingItemClicked(userModel);
+                @Override public void onUserItemClicked(ListingItemViewModel mListingItemViewModel) {
+                    if (SearchListFragment.this.mPresenter != null && mListingItemViewModel != null) {
+                        SearchListFragment.this.mPresenter.onListingItemClicked(mListingItemViewModel);
                     }
                 }
             };

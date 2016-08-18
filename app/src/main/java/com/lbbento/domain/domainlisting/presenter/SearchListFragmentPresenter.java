@@ -1,94 +1,90 @@
 package com.lbbento.domain.domainlisting.presenter;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.lbbento.domain.data.model.ListingItemEntity;
-import com.lbbento.domain.data.model.SearchEntity;
-import com.lbbento.domain.domain.repository.SearchRepository;
-
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.Subscriptions;
+import com.lbbento.domain.data.entities.ListingItemEntity;
+import com.lbbento.domain.domain.interactor.DefaultSubscriber;
+import com.lbbento.domain.domain.interactor.UseCase;
+import com.lbbento.domain.domain.model.SearchModel;
+import com.lbbento.domain.domainlisting.di.ScopeActivity;
+import com.lbbento.domain.domainlisting.mapper.SearchDataMapper;
+import com.lbbento.domain.domainlisting.view.model.ListingItemViewModel;
+import com.lbbento.domain.domainlisting.view.model.SearchViewModel;
 
 /**
  * Created by lbbento on 30/07/2016.
  */
 
+@ScopeActivity
 public class SearchListFragmentPresenter implements SearchListFragmentContract.Presenter<SearchListFragmentContract.View> {
 
-    protected final SearchRepository mSearchRepository;
     protected SearchListFragmentContract.View view;
+    private final SearchDataMapper searchDataMapper;
+    private final UseCase getSearchUseCase;
 
-    @Nullable
-    private Subscription mSubscription = Subscriptions.empty();
 
-    public SearchListFragmentPresenter(@NonNull SearchRepository mSearchRepository) {
-        this.mSearchRepository = mSearchRepository;
+    public SearchListFragmentPresenter(@NonNull UseCase getSearchUseCase, SearchDataMapper searchDataMapper) {
+        this.searchDataMapper = searchDataMapper;
+        this.getSearchUseCase = getSearchUseCase;
     }
 
 
     @Override
-    public void setView(SearchListFragmentContract.View view) {
+    public void setView(@NonNull SearchListFragmentContract.View view) {
         this.view = view;
-        if (view == null) {
-            mSubscription.unsubscribe();
-        }
 
     }
-
 
     @Override
-    public void refresh() {
-        loadSearch();
+    public void setLoading(boolean active) {
+        view.setLoadingIndicator(active);
     }
+
+    @Override
+    public void setRetry(boolean active) {
+        view.setRetryIndicator(false);
+    }
+
+    @Override
+    public void showError() {
+        //TODO showError
+    }
+
+
 
     @Override
     public void loadSearch() {
 
-        view.setRetryIndicator(false);
+        this.getSearchUseCase.execute(new SearchSubscriber());
 
-        view.setLoadingIndicator(true);
+    }
 
 
-        //Use case proposed by Domain - Exercise
-        //Search Params are fixed because it's an exercise.
-        String mode = "buy";
-        String suburb = "Bondi";
-        String pcodes = "2026";
-        String state = "NSW";
+    private final class SearchSubscriber extends DefaultSubscriber<SearchModel> {
 
-        mSubscription = mSearchRepository
-                .getMapSearch(mode, suburb, pcodes, state)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SearchEntity>() {
-                    @Override
-                    public void onCompleted() {
-                        view.setLoadingIndicator(false);
-                    }
+        @Override public void onCompleted() {
+            SearchListFragmentPresenter.this.setLoading(false);
+        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        view.showLoadingError();
-                    }
+        @Override public void onError(Throwable e) {
+            SearchListFragmentPresenter.this.setLoading(false);
+            SearchListFragmentPresenter.this.showError();
+            SearchListFragmentPresenter.this.setRetry(true);
+        }
 
-                    @Override
-                    public void onNext(SearchEntity search) {
-                        loadView(search);
-                    }
-                });
+        @Override public void onNext(SearchModel searchModel) {
+            SearchListFragmentPresenter.this.loadView(searchModel);
+        }
     }
 
     @Override
-    public void loadView(SearchEntity search) {
-        view.showSearch(search);
+    public void loadView(SearchModel pSearchModel) {
+        final SearchViewModel searchViewModel = this.searchDataMapper.transform(pSearchModel);
+        this.view.showSearch(searchViewModel);
     }
 
-    public void onListingItemClicked(ListingItemEntity mListingItemEntity) {
-        view.showListingItemDetails(mListingItemEntity);
+    public void onListingItemClicked(ListingItemViewModel mListingItemViewModel) {
+        view.showListingItemDetails(mListingItemViewModel);
     }
 
 

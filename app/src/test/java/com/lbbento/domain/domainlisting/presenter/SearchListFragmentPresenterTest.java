@@ -1,7 +1,7 @@
 package com.lbbento.domain.domainlisting.presenter;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchEntity;
+import com.lbbento.domain.data.entities.SearchEntity;
 import com.lbbento.domain.domain.repository.SearchRepository;
 
 import org.junit.Before;

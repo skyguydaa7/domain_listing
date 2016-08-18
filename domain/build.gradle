@@ -23,7 +23,6 @@ android {
 }
 
 dependencies {
-    compile project(':data')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //Testing dependencies
@@ -40,4 +39,5 @@ dependencies {
     //Reactive
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.android.support:support-annotations:24.1.1'}
+    compile 'com.android.support:support-annotations:24.1.1'
+}

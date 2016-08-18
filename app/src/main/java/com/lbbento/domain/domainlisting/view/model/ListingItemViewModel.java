@@ -12,37 +12,16 @@ import java.util.List;
 public class ListingItemViewModel {
 
 
-    @SerializedName(value="AdId")
     private Long adId;
-
-    @SerializedName(value="DisplayPrice")
     private String displayPrice;
-
-    @SerializedName(value="Bathrooms")
     private Integer bathrooms;
-
-    @SerializedName(value="Bedrooms")
     private Integer bedrooms;
-
-    @SerializedName(value="Carspaces")
     private Integer carspaces;
-
-    @SerializedName(value="DisplayableAddress")
     private String displayableAddress;
-
-    @SerializedName(value="IsElite")
     private Integer isElite;
-
-    @SerializedName(value="RetinaDisplayThumbUrl")
     private String thumbUrl;
-
-    @SerializedName(value="SecondRetinaDisplayThumbUrl")
     private String secondThumbUrl;
-
-    @SerializedName(value="ImageUrls")
     private List<String> imageUrls;
-
-    @SerializedName(value="AgencyLogoUrl")
     private String agencyLogoUrl;
 
 

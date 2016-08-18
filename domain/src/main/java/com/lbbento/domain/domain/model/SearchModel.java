@@ -1,7 +1,5 @@
 package com.lbbento.domain.domain.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by lbbento on 30/07/2016.
  * Represents the result of a Search

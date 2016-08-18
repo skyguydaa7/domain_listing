@@ -4,8 +4,11 @@ package com.lbbento.domain.domainlisting.presenter;
  * Created by lbbento on 30/06/2016.
  */
 
-import com.lbbento.domain.data.model.ListingItemEntity;
-import com.lbbento.domain.data.model.SearchEntity;
+import com.lbbento.domain.data.entities.ListingItemEntity;
+import com.lbbento.domain.data.entities.SearchEntity;
+import com.lbbento.domain.domain.model.SearchModel;
+import com.lbbento.domain.domainlisting.view.model.ListingItemViewModel;
+import com.lbbento.domain.domainlisting.view.model.SearchViewModel;
 
 /**
  * This specifies the methods that have to be implemented between view and presenter
@@ -14,11 +17,9 @@ public interface SearchListFragmentContract {
 
     interface View extends BaseViewContract<Presenter> {
 
-        void showSearch(SearchEntity search);
+        void showSearch(SearchViewModel search);
 
-        void showListingItemDetails(ListingItemEntity listingItemEntity);
-
-        void showNotFound();
+        void showListingItemDetails(ListingItemViewModel mListingItemViewModel);
     }
 
     interface Presenter<T> extends BasePresenterContract<T> {
@@ -26,9 +27,7 @@ public interface SearchListFragmentContract {
         // No params - exercise
         void loadSearch();
 
-        void loadView(SearchEntity search);
-
-        void refresh();
+        void loadView(SearchModel search);
 
     }
 }

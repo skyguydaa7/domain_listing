@@ -2,10 +2,13 @@ package com.lbbento.domain.domainlisting.di.component;
 
 import android.content.Context;
 
+import com.lbbento.domain.domain.executor.PostExecutionThread;
+import com.lbbento.domain.domain.executor.ThreadExecutor;
 import com.lbbento.domain.domain.repository.SearchRepository;
 import com.lbbento.domain.domainlisting.di.module.AppModule;
 import com.lbbento.domain.domainlisting.di.module.NetModule;
 import com.lbbento.domain.domainlisting.view.activity.BaseActivity;
+import com.lbbento.domain.domainlisting.view.animation.DepthPageTransformer;
 
 import javax.inject.Singleton;
 
@@ -27,5 +30,8 @@ public interface AppComponent {
 
     //Repos - to sub-graphs
     SearchRepository searchRepository();
+    DepthPageTransformer mDepthPageTransformer();
+    ThreadExecutor mThreadExecutor();
+    PostExecutionThread mPostExecutionThread();
 
 }

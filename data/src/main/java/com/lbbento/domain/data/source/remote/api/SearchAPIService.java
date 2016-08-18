@@ -1,11 +1,9 @@
 package com.lbbento.domain.data.source.remote.api;
 
-import com.lbbento.domain.data.model.SearchEntity;
-
-import java.util.Map;
+import com.lbbento.domain.data.entities.SearchEntity;
 
 import retrofit2.http.GET;
-import retrofit2.http.QueryMap;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -16,6 +14,6 @@ import rx.Observable;
 public interface SearchAPIService {
 
     @GET("searchservice.svc/mapsearch")
-    Observable<SearchEntity> getMapSearch(@QueryMap Map<String, String> searchParams);
+    Observable<SearchEntity> getMapSearch(@Query("mode") String mode, @Query("sub") String sub, @Query("pcodes") String pcodes, @Query("state") String state);
 
 }

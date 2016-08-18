@@ -3,14 +3,14 @@ package com.lbbento.domain.data.source.remote;
 import android.support.annotation.NonNull;
 
 import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.model.SearchEntity;
+import com.lbbento.domain.data.entities.SearchEntity;
+import com.lbbento.domain.data.entities.mapper.SearchEntityDataMapper;
 import com.lbbento.domain.data.source.remote.api.SearchAPIService;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.lbbento.domain.domain.model.SearchModel;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -19,25 +19,26 @@ import rx.schedulers.Schedulers;
  */
 public class SearchRemoteDataSource implements SearchDataSource {
 
-    SearchAPIService mSearchAPIService;
+    private final SearchAPIService mSearchAPIService;
+    private final SearchEntityDataMapper mSearchEntityDataMapper;
 
-    public SearchRemoteDataSource(SearchAPIService mSearchAPIService) {
+    public SearchRemoteDataSource(SearchAPIService mSearchAPIService, SearchEntityDataMapper mSearchEntityDataMapper) {
         this.mSearchAPIService = mSearchAPIService;
+        this.mSearchEntityDataMapper = mSearchEntityDataMapper;
     }
 
     @Override
-    public Observable<SearchEntity> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
+    public Observable<SearchModel> getMapSearch(@NonNull String mode, @NonNull String sub, @NonNull String pcodes, @NonNull String state) {
 
-
-        //Usually, we would test each param and build our params string - just keeping the example simples as it just does one call.
-        Map<String, String> params = new HashMap<>();
-        params.put("mode", mode);
-        params.put("sub", sub);
-        params.put("pcodes", pcodes);
-        params.put("state", state);
 
         return mSearchAPIService
-                .getMapSearch(params)
+                .getMapSearch(mode, sub, pcodes, state)
+                .map(new Func1<SearchEntity, SearchModel>() {
+                    @Override
+                    public SearchModel call(SearchEntity searchEntity) {
+                        return SearchRemoteDataSource.this.mSearchEntityDataMapper.transform(searchEntity);
+                    }
+                })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
                     //TODO - save to DB
