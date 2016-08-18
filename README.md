@@ -44,4 +44,7 @@
 
 <br />
 
+<strong> TODO </strong> </br>
+<p> - Refactor tests. </p>
+<p> - Animations. </p>
 
