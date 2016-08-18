@@ -6,9 +6,7 @@
 
 <br />
 
-&nbsp; This example was build as an exercise and has a pre-defined call to meet the requirements. It&#39;s based on the MVP architecture<br />
-
-and used Dependency Injection for testing and productivity.<br />
+&nbsp; This example was build as an exercise and has a pre-defined call to meet the requirements. It&#39;s based on a MVP architecture and separates presentation, domain and data layers for testing and productivity gains.<br />
 
 <br />
 
@@ -46,10 +44,4 @@ and used Dependency Injection for testing and productivity.<br />
 
 <br />
 
-&nbsp; You can find the APK <a href="https://drive.google.com/file/d/0ByrvrpooF3NaUmFRRzhZLVFKRjg/view?usp=sharing"> here </a> as well.<br />
 
-<br />
-
-<br />
-
-Any questions, please contact me on lucasbento7@gmail.com</p>
