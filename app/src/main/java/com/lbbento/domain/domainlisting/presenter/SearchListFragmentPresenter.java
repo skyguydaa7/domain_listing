@@ -70,6 +70,8 @@ public class SearchListFragmentPresenter implements SearchListFragmentContract.P
     @Override
     public void loadSearch() {
 
+        this.setRetry(false);
+        this.setLoading(true);
         this.getSearchUseCase.execute(new SearchSubscriber());
 
     }

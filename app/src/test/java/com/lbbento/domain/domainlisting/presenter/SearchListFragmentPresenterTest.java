@@ -16,21 +16,19 @@
 
 package com.lbbento.domain.domainlisting.presenter;
 
-import com.lbbento.domain.data.datasource.SearchDataSource;
-import com.lbbento.domain.data.entities.SearchEntity;
-import com.lbbento.domain.domain.repository.SearchRepository;
+import com.lbbento.domain.domain.interactor.GetSearchUseCase;
+import com.lbbento.domain.domainlisting.mapper.SearchDataMapper;
+import com.lbbento.domain.domainlisting.view.model.SearchViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
+import rx.Subscriber;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by lbbento on 1/08/2016.
@@ -38,35 +36,28 @@ import static org.mockito.Mockito.when;
 
 public class SearchListFragmentPresenterTest {
 
-//TODO - refactor
-/*
     SearchListFragmentPresenter mSearchListFragmentPresenter;
-    SearchRepository mSearchRepository;
 
-    @Mock SearchDataSource mockSearchRemoteDataSource;
-    @Mock SearchDataSource mockSearchLocalDataSource;
+    @Mock SearchDataMapper mSearchDataMapper;
+    @Mock GetSearchUseCase mGetSearchUseCase;
     @Mock SearchListFragmentContract.View mockSearchView;
-    @Mock
-    SearchEntity mockSearchEntity;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mSearchRepository = new SearchRepository(mockSearchRemoteDataSource, mockSearchLocalDataSource);
-        mSearchListFragmentPresenter = new SearchListFragmentPresenter(mSearchRepository);
+        mSearchListFragmentPresenter = new SearchListFragmentPresenter(mGetSearchUseCase, mSearchDataMapper);
         mSearchListFragmentPresenter.setView(mockSearchView);
     }
 
     @Test
     public void testSearchListFragmentPresenter() {
-        when(mSearchRepository.getMapSearch(anyString(), anyString(), anyString(),anyString())).thenReturn(Observable.just(mockSearchEntity));
+        mSearchListFragmentPresenter.loadSearch();
 
-        mSearchListFragmentPresenter.loadView(mockSearchEntity);
-
-        verify(mockSearchView).showSearch(any(SearchEntity.class));
+        verify(mockSearchView).setLoadingIndicator(true);
+        verify(mGetSearchUseCase).execute(any(Subscriber.class));
 
     }
 
-*/
+
 }

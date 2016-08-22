@@ -145,8 +145,6 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
                 this.searchListAdapter.setListingItemEntityCollection(search.getListingItemEntities());
             }
         }
-
-        setLoadingIndicator(false);
     }
 
     /**
@@ -178,17 +176,8 @@ public class SearchListFragment extends BaseFragment implements SearchListFragme
     @Override
     public void showLoadingError() {
         //TODO Show error when rying to retrieve data
-        setLoadingIndicator(false);
-        setRetryIndicator(true);
     }
 
-
-//    @Override
-//    public void showNotFound() {
-//        //TODO Show not found
-//        setLoadingIndicator(false);
-//
-//    }
 
     @OnClick(R.id.bt_retry) void onButtonRetryClick() {
         mPresenter.loadSearch(); //Exercise - no parameters
